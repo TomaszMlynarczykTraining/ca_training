@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0nc3lw9" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.11.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:process id="Process_Recruitment" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Zgoszenie kandydata">
+      <bpmn:outgoing>Flow_15luewk</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_16noj2r" messageRef="Message_0zq8s6m" />
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_15luewk" sourceRef="StartEvent_1" targetRef="Gateway_11lax2j" />
+    <bpmn:userTask id="Activity_Decyzja" name="Decyzja kadr" camunda:assignee="demo">
+      <bpmn:incoming>Flow_10itnks</bpmn:incoming>
+      <bpmn:outgoing>Flow_0aumult</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_11lax2j" default="Flow_10itnks">
+      <bpmn:incoming>Flow_15luewk</bpmn:incoming>
+      <bpmn:outgoing>Flow_10itnks</bpmn:outgoing>
+      <bpmn:outgoing>Flow_16baxas</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_10itnks" sourceRef="Gateway_11lax2j" targetRef="Activity_Decyzja" />
+    <bpmn:endEvent id="Event_LowBudget" name="Za maly budzet">
+      <bpmn:incoming>Flow_16baxas</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_16baxas" name="Zbyt wysokie oczekiwania" sourceRef="Gateway_11lax2j" targetRef="Event_LowBudget">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${salary&gt;10000}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="Event_Hired" name="kandydat zatrudniony">
+      <bpmn:incoming>Flow_0ex51sf</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0aumult" sourceRef="Activity_Decyzja" targetRef="Gateway_0q1i4zl" />
+    <bpmn:sequenceFlow id="Flow_0ex51sf" sourceRef="Activity_Podpisanie" targetRef="Event_Hired" />
+    <bpmn:userTask id="Activity_Podpisanie" name="Podpisanie umowy">
+      <bpmn:incoming>Flow_0cnc499</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ex51sf</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="Event_Rejected" name="Kandydat orzucil oferte">
+      <bpmn:incoming>Flow_19ldw5s</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_19ldw5s" sourceRef="Event_1bw2yye" targetRef="Event_Rejected" />
+    <bpmn:boundaryEvent id="Event_1bw2yye" name="Kandydat zrezygnowal" attachedToRef="Activity_Podpisanie">
+      <bpmn:outgoing>Flow_19ldw5s</bpmn:outgoing>
+      <bpmn:conditionalEventDefinition id="ConditionalEventDefinition_1e9ww8j">
+        <bpmn:condition xsi:type="bpmn:tFormalExpression">${candidatResigned == true}</bpmn:condition>
+      </bpmn:conditionalEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:exclusiveGateway id="Gateway_0q1i4zl" default="Flow_0cnc499">
+      <bpmn:incoming>Flow_0aumult</bpmn:incoming>
+      <bpmn:outgoing>Flow_0cnc499</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1yufrfz</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0cnc499" sourceRef="Gateway_0q1i4zl" targetRef="Activity_Podpisanie" />
+    <bpmn:endEvent id="Event_0jofbyt" name="Kandydat odrzucony">
+      <bpmn:incoming>Flow_1yufrfz</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1yufrfz" sourceRef="Gateway_0q1i4zl" targetRef="Event_0jofbyt">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${hrDecision==false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+  </bpmn:process>
+  <bpmn:message id="Message_0zq8s6m" name="Message_CandidateApplication" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_Recruitment">
+      <bpmndi:BPMNEdge id="Flow_15luewk_di" bpmnElement="Flow_15luewk">
+        <di:waypoint x="198" y="120" />
+        <di:waypoint x="255" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10itnks_di" bpmnElement="Flow_10itnks">
+        <di:waypoint x="305" y="120" />
+        <di:waypoint x="380" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_16baxas_di" bpmnElement="Flow_16baxas">
+        <di:waypoint x="280" y="145" />
+        <di:waypoint x="280" y="250" />
+        <di:waypoint x="412" y="250" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="263" y="195" width="64" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0aumult_di" bpmnElement="Flow_0aumult">
+        <di:waypoint x="480" y="120" />
+        <di:waypoint x="575" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ex51sf_di" bpmnElement="Flow_0ex51sf">
+        <di:waypoint x="860" y="120" />
+        <di:waypoint x="932" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_19ldw5s_di" bpmnElement="Flow_19ldw5s">
+        <di:waypoint x="810" y="178" />
+        <di:waypoint x="810" y="250" />
+        <di:waypoint x="932" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0cnc499_di" bpmnElement="Flow_0cnc499">
+        <di:waypoint x="625" y="120" />
+        <di:waypoint x="760" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1yufrfz_di" bpmnElement="Flow_1yufrfz">
+        <di:waypoint x="600" y="145" />
+        <di:waypoint x="600" y="250" />
+        <di:waypoint x="662" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Gateway_11lax2j_di" bpmnElement="Gateway_11lax2j" isMarkerVisible="true">
+        <dc:Bounds x="255" y="95" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1v10h7t_di" bpmnElement="Event_LowBudget">
+        <dc:Bounds x="412" y="232" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="392" y="275" width="76" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0vhh5g4_di" bpmnElement="Activity_Decyzja">
+        <dc:Bounds x="380" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_16kaool_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="162" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="154" y="145" width="52" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0179ijd_di" bpmnElement="Event_Rejected">
+        <dc:Bounds x="932" y="232" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="909" y="275" width="82" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0xp9656_di" bpmnElement="Event_Hired">
+        <dc:Bounds x="932" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="921" y="145" width="58" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0n0vcdb_di" bpmnElement="Activity_Podpisanie">
+        <dc:Bounds x="760" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0q1i4zl_di" bpmnElement="Gateway_0q1i4zl" isMarkerVisible="true">
+        <dc:Bounds x="575" y="95" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0jofbyt_di" bpmnElement="Event_0jofbyt">
+        <dc:Bounds x="662" y="232" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="654" y="275" width="52" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_03cz9bi_di" bpmnElement="Event_1bw2yye">
+        <dc:Bounds x="792" y="142" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="779" y="185" width="62" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
