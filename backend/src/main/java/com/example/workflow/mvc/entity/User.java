@@ -1,4 +1,4 @@
-package com.example.workflow.mvc;
+package com.example.workflow.mvc.entity;
 
 import lombok.Data;
 import lombok.Getter;

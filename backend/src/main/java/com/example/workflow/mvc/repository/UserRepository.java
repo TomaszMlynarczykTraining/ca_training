@@ -1,5 +1,6 @@
-package com.example.workflow.mvc;
+package com.example.workflow.mvc.repository;
 
+import com.example.workflow.mvc.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

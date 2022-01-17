@@ -1,5 +1,8 @@
-package com.example.workflow.mvc;
+package com.example.workflow.mvc.controllers;
 
+import com.example.workflow.mvc.entity.User;
+import com.example.workflow.mvc.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +15,7 @@ import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1/")
+@RequiredArgsConstructor
 public class UserController {
 
     @Autowired
