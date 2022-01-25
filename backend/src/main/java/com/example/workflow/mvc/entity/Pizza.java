@@ -1,7 +1,6 @@
 package com.example.workflow.mvc.entity;
 
 
-import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -12,7 +11,6 @@ import java.io.Serializable;
 
 @Data
 @Entity
-@Builder
 public class Pizza implements Serializable {
 
     @Id
