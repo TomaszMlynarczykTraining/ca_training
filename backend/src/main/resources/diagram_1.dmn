@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" id="Definitions_10jo7yb" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.11.1">
+  <decision id="Decision_0fjsi5x" name="Decision 1">
+    <decisionTable id="DecisionTable_1m4x04u" hitPolicy="FIRST">
+      <input id="Input_1">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>userType</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_136e2vi">
+        <inputExpression id="LiteralExpression_0dlidco" typeRef="string">
+          <text>userName</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" name="result" typeRef="string" />
+      <rule id="DecisionRule_0rd3dym">
+        <inputEntry id="UnaryTests_115d6gv">
+          <text>"Admin"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1kg4w1m">
+          <text>"admin"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1lsonlv">
+          <text>"true"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1n3y05h">
+        <inputEntry id="UnaryTests_0vprhtc">
+          <text>"CommonUser"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0kjjwd4">
+          <text>"user"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0pke2oj">
+          <text>"false"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_11r5nfq">
+        <inputEntry id="UnaryTests_12b2xxv">
+          <text>""</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_04k3cns">
+          <text>"'</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_12946dt">
+          <text></text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_0fjsi5x">
+        <dc:Bounds height="80" width="180" x="190" y="120" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
