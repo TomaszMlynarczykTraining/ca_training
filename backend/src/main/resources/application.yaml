@@ -16,6 +16,8 @@ camunda.bpm.client:
   subscriptions:
     ticketSerive.getTicketInformation:
       include-extension-properties: true
+    activityExternalTask.getAction:
+      include-extension-properties: true
 
 
 camunda.bpm.admin-user:
