@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1ha9ylu" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.11.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:process id="PR01_PIZZA_ORDER" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1c7y5u1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1c7y5u1" sourceRef="StartEvent_1" targetRef="PR01_TS_GET_USER" />
+    <bpmn:serviceTask id="PR01_TS_GET_USER" name="Get user data" camunda:delegateExpression="${usersDelegate}">
+      <bpmn:incoming>Flow_1c7y5u1</bpmn:incoming>
+      <bpmn:outgoing>Flow_1wacbqm</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="PR1_GW_FIRST">
+      <bpmn:incoming>Flow_0ud4j1g</bpmn:incoming>
+      <bpmn:incoming>Flow_027vrle</bpmn:incoming>
+      <bpmn:outgoing>Flow_06kf3fe</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1wacbqm" sourceRef="PR01_TS_GET_USER" targetRef="PR01_TS_EXTERNAL" />
+    <bpmn:sequenceFlow id="Flow_06kf3fe" sourceRef="PR1_GW_FIRST" targetRef="PR01_UT_CHOOSE_CRUST" />
+    <bpmn:userTask id="PR01_UT_CHOOSE_CRUST" name="Choose crust">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:outputParameter name="crust">${crust}</camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_06kf3fe</bpmn:incoming>
+      <bpmn:outgoing>Flow_0fzc8i9</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="PR1_GW_WHAT_CRUST" name="What crust">
+      <bpmn:incoming>Flow_0fzc8i9</bpmn:incoming>
+      <bpmn:outgoing>Flow_0t0795u</bpmn:outgoing>
+      <bpmn:outgoing>Flow_09r000a</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0fzc8i9" sourceRef="PR01_UT_CHOOSE_CRUST" targetRef="PR1_GW_WHAT_CRUST" />
+    <bpmn:sequenceFlow id="Flow_0t0795u" name="thin" sourceRef="PR1_GW_WHAT_CRUST" targetRef="PR01_TS_GET_NEAPOLITAN_MENU">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${crust=="ciekie"}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="PR01_TS_GET_NEAPOLITAN_MENU" name="Get neapolitan pizza menu" camunda:delegateExpression="${mockDelegate}">
+      <bpmn:incoming>Flow_0t0795u</bpmn:incoming>
+      <bpmn:outgoing>Flow_0bxfheq</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_09r000a" name="staffed" sourceRef="PR1_GW_WHAT_CRUST" targetRef="PR01_TS_GET_NORMAL_MENU">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${crust=="grube"}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="PR01_TS_GET_NORMAL_MENU" name="Get normal pizza menu" camunda:delegateExpression="${mockDelegate}">
+      <bpmn:incoming>Flow_09r000a</bpmn:incoming>
+      <bpmn:outgoing>Flow_0k4tz64</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="PR1_GW_WHAT_CRUST_END">
+      <bpmn:incoming>Flow_0bxfheq</bpmn:incoming>
+      <bpmn:incoming>Flow_0k4tz64</bpmn:incoming>
+      <bpmn:outgoing>Flow_1pjibpf</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0bxfheq" sourceRef="PR01_TS_GET_NEAPOLITAN_MENU" targetRef="PR1_GW_WHAT_CRUST_END" />
+    <bpmn:sequenceFlow id="Flow_0k4tz64" sourceRef="PR01_TS_GET_NORMAL_MENU" targetRef="PR1_GW_WHAT_CRUST_END" />
+    <bpmn:sequenceFlow id="Flow_1pjibpf" sourceRef="PR1_GW_WHAT_CRUST_END" targetRef="PR01_UT_CHOOSE_PIZZA" />
+    <bpmn:userTask id="PR01_UT_CHOOSE_PIZZA" name="Choose pizza">
+      <bpmn:incoming>Flow_1pjibpf</bpmn:incoming>
+      <bpmn:outgoing>Flow_1e599np</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1e599np" sourceRef="PR01_UT_CHOOSE_PIZZA" targetRef="PR01_TM_WAIT_FOR_TOPINGS" />
+    <bpmn:intermediateCatchEvent id="PR01_TM_WAIT_FOR_TOPINGS" name="Wait 1min for pizza topings to load">
+      <bpmn:incoming>Flow_1e599np</bpmn:incoming>
+      <bpmn:outgoing>Flow_0k58wqs</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1n0h0kl">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT1M</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_0k58wqs" sourceRef="PR01_TM_WAIT_FOR_TOPINGS" targetRef="PR01_UT_CHOOSE_TOPPINGS" />
+    <bpmn:userTask id="PR01_UT_CHOOSE_TOPPINGS" name="Choose toppings">
+      <bpmn:incoming>Flow_0k58wqs</bpmn:incoming>
+      <bpmn:outgoing>Flow_0yk8wfr</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0yk8wfr" sourceRef="PR01_UT_CHOOSE_TOPPINGS" targetRef="PR01_UT_CHOOSE_MANY_PIZZAS" />
+    <bpmn:userTask id="PR01_UT_CHOOSE_MANY_PIZZAS" name="How many pizzas?">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:outputParameter name="manyPizzas">${manyPizzas}</camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0yk8wfr</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ph11z4</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="PR1_GW_HOW_MANY_PIZZAS">
+      <bpmn:incoming>Flow_1ph11z4</bpmn:incoming>
+      <bpmn:outgoing>Flow_1oncmtf</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1tvo4oh</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1ph11z4" sourceRef="PR01_UT_CHOOSE_MANY_PIZZAS" targetRef="PR1_GW_HOW_MANY_PIZZAS" />
+    <bpmn:sequenceFlow id="Flow_1oncmtf" sourceRef="PR1_GW_HOW_MANY_PIZZAS" targetRef="Activity_0gjzs84">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${manyPizzas&gt;1}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="PR01_END_EVENT">
+      <bpmn:incoming>Flow_1tvo4oh</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1tvo4oh" sourceRef="PR1_GW_HOW_MANY_PIZZAS" targetRef="PR01_END_EVENT">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${manyPizzas==1}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:manualTask id="Activity_0gjzs84">
+      <bpmn:incoming>Flow_1oncmtf</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ud4j1g</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:sequenceFlow id="Flow_0ud4j1g" sourceRef="Activity_0gjzs84" targetRef="PR1_GW_FIRST" />
+    <bpmn:sequenceFlow id="Flow_027vrle" sourceRef="PR01_TS_EXTERNAL" targetRef="PR1_GW_FIRST" />
+    <bpmn:serviceTask id="PR01_TS_EXTERNAL" name="External" camunda:type="external" camunda:topic="externalTest">
+      <bpmn:incoming>Flow_1wacbqm</bpmn:incoming>
+      <bpmn:outgoing>Flow_027vrle</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="PR01_PIZZA_ORDER">
+      <bpmndi:BPMNEdge id="Flow_1c7y5u1_di" bpmnElement="Flow_1c7y5u1">
+        <di:waypoint x="188" y="310" />
+        <di:waypoint x="250" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1wacbqm_di" bpmnElement="Flow_1wacbqm">
+        <di:waypoint x="350" y="310" />
+        <di:waypoint x="410" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_06kf3fe_di" bpmnElement="Flow_06kf3fe">
+        <di:waypoint x="625" y="310" />
+        <di:waypoint x="680" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0fzc8i9_di" bpmnElement="Flow_0fzc8i9">
+        <di:waypoint x="780" y="310" />
+        <di:waypoint x="835" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0t0795u_di" bpmnElement="Flow_0t0795u">
+        <di:waypoint x="860" y="285" />
+        <di:waypoint x="860" y="120" />
+        <di:waypoint x="1000" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="867" y="200" width="17" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09r000a_di" bpmnElement="Flow_09r000a">
+        <di:waypoint x="860" y="335" />
+        <di:waypoint x="860" y="430" />
+        <di:waypoint x="990" y="430" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="859" y="380" width="33" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0bxfheq_di" bpmnElement="Flow_0bxfheq">
+        <di:waypoint x="1100" y="120" />
+        <di:waypoint x="1230" y="120" />
+        <di:waypoint x="1230" y="255" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0k4tz64_di" bpmnElement="Flow_0k4tz64">
+        <di:waypoint x="1090" y="430" />
+        <di:waypoint x="1230" y="430" />
+        <di:waypoint x="1230" y="305" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1pjibpf_di" bpmnElement="Flow_1pjibpf">
+        <di:waypoint x="1255" y="280" />
+        <di:waypoint x="1360" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1e599np_di" bpmnElement="Flow_1e599np">
+        <di:waypoint x="1460" y="280" />
+        <di:waypoint x="1572" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0k58wqs_di" bpmnElement="Flow_0k58wqs">
+        <di:waypoint x="1608" y="280" />
+        <di:waypoint x="1720" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0yk8wfr_di" bpmnElement="Flow_0yk8wfr">
+        <di:waypoint x="1820" y="280" />
+        <di:waypoint x="1940" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ph11z4_di" bpmnElement="Flow_1ph11z4">
+        <di:waypoint x="2040" y="280" />
+        <di:waypoint x="2165" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1oncmtf_di" bpmnElement="Flow_1oncmtf">
+        <di:waypoint x="2190" y="305" />
+        <di:waypoint x="2190" y="760" />
+        <di:waypoint x="1130" y="760" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1tvo4oh_di" bpmnElement="Flow_1tvo4oh">
+        <di:waypoint x="2215" y="280" />
+        <di:waypoint x="2462" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ud4j1g_di" bpmnElement="Flow_0ud4j1g">
+        <di:waypoint x="1030" y="760" />
+        <di:waypoint x="600" y="760" />
+        <di:waypoint x="600" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_027vrle_di" bpmnElement="Flow_027vrle">
+        <di:waypoint x="510" y="310" />
+        <di:waypoint x="575" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Gateway_0n80mdc_di" bpmnElement="PR1_GW_FIRST" isMarkerVisible="true">
+        <dc:Bounds x="575" y="285" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0u9h6cy_di" bpmnElement="PR01_UT_CHOOSE_CRUST">
+        <dc:Bounds x="680" y="270" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1d6gclr_di" bpmnElement="PR1_GW_WHAT_CRUST" isMarkerVisible="true">
+        <dc:Bounds x="835" y="285" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="895" y="303" width="53" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1jyft79_di" bpmnElement="PR01_TS_GET_NORMAL_MENU">
+        <dc:Bounds x="990" y="390" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ke5u2p_di" bpmnElement="PR01_TS_GET_NEAPOLITAN_MENU">
+        <dc:Bounds x="1000" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_02iadpz_di" bpmnElement="PR1_GW_WHAT_CRUST_END" isMarkerVisible="true">
+        <dc:Bounds x="1205" y="255" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1x50gm3_di" bpmnElement="PR01_UT_CHOOSE_PIZZA">
+        <dc:Bounds x="1360" y="240" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1bfxq78_di" bpmnElement="PR01_TM_WAIT_FOR_TOPINGS">
+        <dc:Bounds x="1572" y="262" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1552" y="305" width="77" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_06vnxq1_di" bpmnElement="PR01_UT_CHOOSE_TOPPINGS">
+        <dc:Bounds x="1720" y="240" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_00ov2ok_di" bpmnElement="PR01_UT_CHOOSE_MANY_PIZZAS">
+        <dc:Bounds x="1940" y="240" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_00elcr4_di" bpmnElement="PR1_GW_HOW_MANY_PIZZAS" isMarkerVisible="true">
+        <dc:Bounds x="2165" y="255" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0km5u6b_di" bpmnElement="PR01_END_EVENT">
+        <dc:Bounds x="2462" y="262" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1bt3ki2_di" bpmnElement="Activity_0gjzs84">
+        <dc:Bounds x="1030" y="720" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="292" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_10c4cja_di" bpmnElement="PR01_TS_GET_USER">
+        <dc:Bounds x="250" y="270" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1rj22a5_di" bpmnElement="PR01_TS_EXTERNAL">
+        <dc:Bounds x="410" y="270" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
