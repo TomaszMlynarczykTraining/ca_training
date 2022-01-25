@@ -37,7 +37,7 @@ public class SavePaymentDelegate implements JavaDelegate {
 
         delegateExecution.setVariable("pizzaList", pizzas);
 
-        delegateExecution.getVariable("pizza")
+        delegateExecution.getVariable("pizza");
 
 
     }
