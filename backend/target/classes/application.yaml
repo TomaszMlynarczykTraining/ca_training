@@ -11,6 +11,11 @@ spring.flyway.baseline-on-migrate: true
 server.port: 8081
 
 
+camunda.bpm.client:
+  base-url: http://localhost:8081/engine-rest
+  subscriptions:
+    ticketSerive.getTicketInformation:
+      include-extension-properties: true
 
 
 camunda.bpm.admin-user:

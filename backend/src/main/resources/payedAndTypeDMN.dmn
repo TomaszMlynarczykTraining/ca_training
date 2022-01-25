@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="Definitions_1gnkrn8" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.11.1">
+  <decision id="PR01_DMN_TYPE_PAYED" name="PR01_DMN_TYPE_PAYED">
+    <decisionTable id="DecisionTable_1jb71m3" hitPolicy="FIRST">
+      <input id="Input_1" camunda:inputVariable="ticketType">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>ticketType</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_03b7kwn" label="isPaymentSaved" camunda:inputVariable="isPaymentSaved">
+        <inputExpression id="LiteralExpression_0w4vysk" typeRef="boolean">
+          <text>isPaymentSaved</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" name="result" typeRef="string" />
+      <rule id="DecisionRule_0pu2ufh">
+        <inputEntry id="UnaryTests_1y00kni">
+          <text>"NORMAL"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0e0nup1">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0w72ihv">
+          <text>"isPayedAndNormal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_078mdiz">
+        <inputEntry id="UnaryTests_1csahj0">
+          <text>"REDUCED"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1rxc821">
+          <text>true</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0pcsegp">
+          <text>"isPayedAndReduced"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0qw2wlc">
+        <inputEntry id="UnaryTests_1fz7t0o">
+          <text>"NORMAL"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1uaqyu8">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1xfe4r1">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1tak98x">
+        <inputEntry id="UnaryTests_169ao2v">
+          <text>"REDUCED"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1w9sh7w">
+          <text>false</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0b60rqg">
+          <text>"Reduced"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1k7wgqq">
+        <inputEntry id="UnaryTests_07q3q5f">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_111chs4">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1dndi6m">
+          <text>null</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="PR01_DMN_TYPE_PAYED">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
