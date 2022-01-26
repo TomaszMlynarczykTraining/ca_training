@@ -18,4 +18,8 @@ public class PizzaService {
     public List<Pizza> getPizzas() {
         return pizzaRepository.findAll();
     }
+
+    public List<Pizza> getNormalPizzas() {
+        return pizzaRepository.findByName("NORMAL");
+    }
 }

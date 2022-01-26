@@ -22,5 +22,6 @@ public class SavePaymentDelegate implements JavaDelegate {
 
         delegateExecution.setVariable(TicketProcess.PR01_ST1_SAVE_PAYMENT_IS_PAYED, true);
 
+      
     }
 }

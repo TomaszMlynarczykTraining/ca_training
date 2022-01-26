@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="decisionTable" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.11.1">
+  <decision id="example" name="Decision 1">
+    <decisionTable id="DecisionTable_1ho2zyh" hitPolicy="FIRST">
+      <input id="Input_1" label="PizzaType" camunda:inputVariable="PizzaType">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_10yqr7s" label="Islogged" camunda:inputVariable="Islogged">
+        <inputExpression id="LiteralExpression_1np0jcz" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1gd7scl" label="ToppingName" camunda:inputVariable="ToppingName">
+        <inputExpression id="LiteralExpression_0b8rigc" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" name="price" typeRef="string" />
+      <rule id="DecisionRule_0i4fmre">
+        <inputEntry id="UnaryTests_0848rbs">
+          <text>"NORMAL"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0xxpicq">
+          <text>"0"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0x2bctx">
+          <text>"Pepperoni"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1i3l927">
+          <text>10</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0vxnbek">
+        <inputEntry id="UnaryTests_0glp98f">
+          <text>"NORMAL"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1246xvi">
+          <text>"1"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0cdxb1y">
+          <text>"Pepperoni"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0xmuqo1">
+          <text>20</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="example">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
