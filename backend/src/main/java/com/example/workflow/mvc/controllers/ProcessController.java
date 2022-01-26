@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.example.workflow.TicketProcess.PR01_TICKET_PROCESS;
-
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1/process")
@@ -20,12 +18,12 @@ public class ProcessController {
 
     @PostMapping("/start")
     public void startProcessForBusinessKey(String businessKey) {
-        runtimeService.startProcessInstanceByKey(PR01_TICKET_PROCESS, businessKey);
+        runtimeService.startProcessInstanceByKey("PR01-PIZZA-PROCESS", businessKey);
     }
 
     @PostMapping("/corellate")
-    public void corellateMessage(String messageName) {
-        runtimeService.correlateMessage(messageName);
+    public void corellateMessage(String messageName, String businessKey) {
+        runtimeService.correlateMessage(messageName, businessKey);
     }
 
 }

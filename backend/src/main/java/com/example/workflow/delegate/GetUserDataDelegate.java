@@ -19,5 +19,8 @@ public class GetUserDataDelegate implements JavaDelegate {
     public void execute(DelegateExecution execution) throws Exception {
         List<User> allUser = userRepository.findAll();
         execution.setVariable("allUser", allUser);
+        execution.setVariable("Islogged", allUser.get(0).getIsLogged());
+        execution.setVariable("PizzaType", "NORMAL");
+        execution.setVariable("ToppingName", "Pepperoni");
     }
 }
