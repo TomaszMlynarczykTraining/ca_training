@@ -24,8 +24,8 @@ public class ProcessController {
     }
 
     @PostMapping("/corellate")
-    public void corellateMessage(String messageName) {
-        runtimeService.correlateMessage(messageName);
+    public void corellateMessage(String messageName, String bizKey) {
+        runtimeService.correlateMessage(messageName, bizKey);
     }
 
 }
