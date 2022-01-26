@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:camunda="http://camunda.org/schema/1.0/dmn" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="DEF01_PIZZA" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.11.1">
+  <decision id="DE01_PIZZA" name="Decision 1">
+    <decisionTable id="DecisionTable_0f165js" hitPolicy="FIRST">
+      <input id="Input_1" label="type" camunda:inputVariable="type">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1idytzs" label="topping" camunda:inputVariable="topping">
+        <inputExpression id="LiteralExpression_0kjl859" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1d7iart" label="isLogged" biodi:width="192" camunda:inputVariable="isLogged">
+        <inputExpression id="LiteralExpression_0ras720" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_02j8c7u" name="price" typeRef="string" />
+      <rule id="DecisionRule_1wsls56">
+        <inputEntry id="UnaryTests_1cqy7on">
+          <text>"normal"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_163q1it">
+          <text>"pepperoni"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0zbmit6">
+          <text>"0"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1mkkh6h">
+          <text>"10"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_01ndvdf">
+        <inputEntry id="UnaryTests_0u560zq">
+          <text>"neapolitan"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1gq2nto">
+          <text>"anchois"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_13p8o7h">
+          <text>"0"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_15heikx">
+          <text>"20"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0dzdfy6">
+        <inputEntry id="UnaryTests_0f08cj2">
+          <text>"normal"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1a0brwi">
+          <text>"bacon"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1aiphjl">
+          <text>"1"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0sam79c">
+          <text>"33"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0u4awlm">
+        <inputEntry id="UnaryTests_1thgxp6">
+          <text>"neapolitan"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0zp3ahf">
+          <text>"egg"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1swfg23">
+          <text>"1"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_04oiaru">
+          <text>"22"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_09prdgz">
+        <inputEntry id="UnaryTests_088n2nv">
+          <text>"normal"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_07s2ofb">
+          <text>"eggplant"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0errira">
+          <text>"0"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1vhghan">
+          <text>"14"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="DE01_PIZZA">
+        <dc:Bounds height="80" width="180" x="160" y="80" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
